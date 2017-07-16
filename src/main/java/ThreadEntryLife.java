@@ -20,10 +20,10 @@ public class ThreadEntryLife implements Runnable {
                     Entry entry;
                     if ((entry = cache.getFirstQueue())!=null) {
                         long timeCheck = cache.getTime()-entry.getTime();
-                        System.out.println("Entry time in seconds: "+timeCheck);
-                        System.out.println("Max entry time in seconds: "+cache.getEntryMaxTime());
                         if (timeCheck >= cache.getEntryMaxTime()) {
                             System.out.println("ENTRY LIFE TIME: Entry -> "+ entry.getKey() +", was deleted for not beign used.");
+                            System.out.println("Entry time in seconds: "+timeCheck);
+                            System.out.println("Max entry time in seconds: "+cache.getEntryMaxTime());
                             cache.evict(entry.getKey());
                         } else {
                             check = false;
