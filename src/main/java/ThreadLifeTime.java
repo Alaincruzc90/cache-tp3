@@ -10,7 +10,7 @@ public class ThreadLifeTime implements Runnable {
     public void run() {
         while (true){
             try {
-                Thread.sleep(cache.getCacheMaxTime()*1000);
+                TimeUnit.SECONDS.sleep(cache.getCacheMaxTime());
                 cache.clear();
             } catch (InterruptedException e) {
                 e.printStackTrace();
