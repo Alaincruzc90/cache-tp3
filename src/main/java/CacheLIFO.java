@@ -39,4 +39,10 @@ public class CacheLIFO<K,V> extends CacheObject<K,V> {
         stack.push(key);
     }
 
+    @Override
+    public void clear(){
+        super.clear();
+        stack.clear();
+    }
+
 }

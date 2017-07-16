@@ -8,9 +8,9 @@ public class EntryComparator implements Comparator<Entry> {
     public int compare(Entry o1, Entry o2) {
         try {
             if (o1.getTime() > o2.getTime()) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         } catch(NullPointerException np) {
             System.out.println(np.toString());

@@ -72,6 +72,8 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
             Entry oldEntry = entryMap.get(key);
             priorityQE.remove(oldEntry);
             Entry entry = new Entry(key, getTime(), entryMap.get(key).getData());
+            entryMap.remove(key);
+            entryMap.put(key,entry);
             priorityQE.add(entry);
             return entryMap.get(key).getData();
         }
@@ -127,7 +129,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         return cacheMaxTime;
     }
 
-    public Entry getFirstQueue(){
+    public synchronized Entry getFirstQueue(){
         return priorityQE.peek();
     }
 
