@@ -22,6 +22,7 @@ public class Service {
         this.cacheOption = cacheOption;
         cacheID = new CacheFIFO<Integer, String>("ID Cache");
         cacheTitle = new CacheFIFO<String, String>("Title Cache");
+        dataAccess = new DataAccessObject();
     }
 
     //Retrieves page based on ID.

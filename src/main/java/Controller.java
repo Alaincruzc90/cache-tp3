@@ -28,7 +28,7 @@ public class Controller {
                 //Receive web page identifier
                 int webPageIdentifier = scanner.nextInt();
                 //Pass request to Service
-                service.getPage(webPageIdentifier);
+                System.out.println(service.getPage(webPageIdentifier));
             } else if (option == 3) {
                 System.out.println("Goodbye!");
             } else {
