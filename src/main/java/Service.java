@@ -1,4 +1,5 @@
 /**
+ * Created by esteban on 7/13/17.
  * Class in charge of connecting with the Data Access Object and the Cache.
  * It receives the input of the user. Checks if the content is available in the cache.
  * If it is not it retrieves it from the database and stores it in the cache.

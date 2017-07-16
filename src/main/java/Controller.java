@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 /**
+ * Created by esteban on 7/13/17.
  * Class in charge of receiving input from the user and passing the request to the Service class.
  * It consists of a console menu which gives the user three options. The first option is for searching a web page by it's name.
  * The second is searching by an identifier. The third option is exiting from the program.
