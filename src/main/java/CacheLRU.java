@@ -26,6 +26,10 @@ public class CacheLRU<K,V> extends CacheObject<K,V> {
         priorityLRU = new PriorityQueue<Entry<K, V>>(30, (Comparator<? super Entry>) comparator);
     }
 
+    /*
+    * Method that finds the appropriate victim of the cache based on it's definition.
+    * Returns the key of the selected victim.
+    */
     @Override
     public K getVictim(){
         return priorityLRU.poll().getKey();

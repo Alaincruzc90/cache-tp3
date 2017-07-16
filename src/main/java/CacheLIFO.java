@@ -1,10 +1,11 @@
 import java.util.Stack;
 
 /**
- * Created by alaincruzcasanova on 7/15/17.
+ * Cache that ues last in, first out algorithm to choose the evict victim.
  */
 public class CacheLIFO<K,V> extends CacheObject<K,V> {
 
+    // Stack are perfect for the LIFO algorithm, because it allows to pop the last element that was inserted.
     private Stack<K> stack;
 
     public CacheLIFO(String cacheName){
@@ -22,6 +23,10 @@ public class CacheLIFO<K,V> extends CacheObject<K,V> {
         stack = new Stack<K>();
     }
 
+    /*
+    * Method that finds the appropriate victim of the cache based on it's definition.
+    * Returns the key of the selected victim.
+    */
     @Override
     public K getVictim(){
         return stack.pop();
