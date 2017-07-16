@@ -47,8 +47,8 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         Comparator<Entry> comparator = new EntryComparator();
         priorityQE = new PriorityQueue<Entry>(10, (Comparator<? super Entry>) comparator);
         entryMap = new HashMap<K, Entry<K, V>>();
-//        initEntryLife(this);
-//        initLifeTime(this);
+        initEntryLife(this);
+        initLifeTime(this);
     }
 
     public CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
@@ -59,8 +59,8 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         Comparator<Entry> comparator = new EntryComparator();
         priorityQE = new PriorityQueue<Entry>(10, (Comparator<? super Entry>) comparator);
         entryMap = new HashMap<K, Entry<K, V>>();
-//        initEntryLife(this);
-//        initLifeTime(this);
+        initEntryLife(this);
+        initLifeTime(this);
     }
 
     public String getName() {

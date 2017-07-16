@@ -14,7 +14,6 @@ public class ThreadEntryLife implements Runnable {
     public void run() {
         while (true){
             try {
-                System.out.println("I am here -> Thread Entry");
                 TimeUnit.SECONDS.sleep(5);
                 boolean check = true;
                 while(check){
