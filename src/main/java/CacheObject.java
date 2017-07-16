@@ -31,7 +31,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         this.cacheName = cacheName;
         // For our priority queue we need to compare thier time in order to sort them
         Comparator<Entry> comparator = new EntryComparator();
-        priorityQE = new PriorityQueue<Entry>(10, (Comparator<? super Entry>) comparator);
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
         entryMap = new HashMap<K, Entry<K, V>>();
         initEntryLife(this);
         initLifeTime(this);
@@ -45,7 +45,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         Comparator<Entry> comparator = new EntryComparator();
-        priorityQE = new PriorityQueue<Entry>(10, (Comparator<? super Entry>) comparator);
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
         entryMap = new HashMap<K, Entry<K, V>>();
         initEntryLife(this);
         initLifeTime(this);
@@ -57,7 +57,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         this.entryMaxTime = entryMaxTime;
         this.cacheMaxTime = cacheMaxTime;
         Comparator<Entry> comparator = new EntryComparator();
-        priorityQE = new PriorityQueue<Entry>(10, (Comparator<? super Entry>) comparator);
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
         entryMap = new HashMap<K, Entry<K, V>>();
         initEntryLife(this);
         initLifeTime(this);
@@ -69,10 +69,8 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
 
     public synchronized V get(K key){
         if (entryMap.containsKey(key)) {
-            Entry oldEntry = entryMap.get(key);
-            priorityQE.remove(oldEntry);
             Entry entry = new Entry(key, getTime(), entryMap.get(key).getData());
-            entryMap.remove(key);
+            evict(key);
             entryMap.put(key,entry);
             priorityQE.add(entry);
             return entryMap.get(key).getData();
@@ -137,6 +135,10 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         //System.out.println("Stoping threads.");
         entryThread.interrupt();
         lifeThread.interrupt();
+    }
+
+    public Map getMap(){
+        return  entryMap;
     }
 
     @Override
