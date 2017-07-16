@@ -13,25 +13,46 @@ public class Controller {
     public static void main(String[] args) {
         Service service = new Service(true);
 
-        System.out.println("Welcome! Type 1 to search by a page name. Type 2 to search by page identifier. Type 3 to exit program.");
+        System.out.println("Welcome! Type 1 to search by a page name. Type 2 to search by page identifier. Type 3 to exit program. Cache is active to toggle cache status(active or inactive) select option 4.");
         Scanner scanner = new Scanner(System.in);
         int option = -1;
         do {
             System.out.println("Select an option.");
             option = scanner.nextInt();
+
+            //Search page by title
             if (option == 1) {
                 //Receive wep page name
-                String webPageName = scanner.next();
+                String webPageTitle = scanner.next();
                 //Pass the request to Service
-                service.getPage(webPageName);
-            } else if (option == 2) {
+                System.out.println(service.getPage(webPageTitle));
+            }
+
+            //Search page by identifier
+            else if (option == 2) {
                 //Receive web page identifier
                 int webPageIdentifier = scanner.nextInt();
                 //Pass request to Service
                 System.out.println(service.getPage(webPageIdentifier));
-            } else if (option == 3) {
+            }
+
+            //Exit
+            else if (option == 3) {
                 System.out.println("Goodbye!");
-            } else {
+            }
+
+            //Toggle cache option
+            else if (option == 4) {
+                boolean cacheStatus = !service.getCacheOption();
+                service.toggleCache(cacheStatus);
+                if(cacheStatus)
+                    System.out.println("Cache is active.");
+                else
+                    System.out.println("Cache is inactive.");
+            }
+
+            //Invalid option
+            else {
                 System.out.println("Invalid option! Valid options are 1,2 or 3.");
             }
 

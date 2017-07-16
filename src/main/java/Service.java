@@ -83,4 +83,8 @@ public class Service {
         this.cacheOption = cacheOption;
     }
 
+    public boolean getCacheOption(){
+        return this.cacheOption;
+    }
+
 }
