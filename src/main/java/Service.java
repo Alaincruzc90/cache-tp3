@@ -39,6 +39,11 @@ public class Service {
             }
             //If it is not. Retrieve it from database.
             result = dataAccess.getPage(id);
+
+            //If the result is null(not found) then return an error String.
+            if(result == null)
+                return "Error: Page not found.";
+
             //Store it on cache and return the page.
             cacheID.put(id,result);
             return result;
@@ -48,6 +53,11 @@ public class Service {
             //If cache is deactivated
             //Retrieve page from database and return it.
             result = dataAccess.getPage(id);
+
+            //If the result is null(not found) then return an error String.
+            if(result == null)
+                return "Error: Page not found.";
+
             return result;
         }
     }
@@ -65,6 +75,11 @@ public class Service {
             }
             //If it is not. Retrieve it from database.
             result = dataAccess.getPage(title);
+
+            //If the result is null(not found) then return an error String.
+            if(result == null)
+                return "Error: Page not found.";
+
             //Store it on cache and return the page.
             cacheTitle.put(title,result);
             return result;
@@ -74,6 +89,11 @@ public class Service {
             //If cache is deactivated
             //Retrieve page from database and return it.
             result = dataAccess.getPage(title);
+
+            //If the result is null(not found) then return an error String.
+            if(result == null)
+                return "Error: Page not found.";
+
             return result;
         }
     }
@@ -81,6 +101,15 @@ public class Service {
     //Deactivates or activates cache.
     public void toggleCache(boolean cacheOption){
         this.cacheOption = cacheOption;
+    }
+
+    public boolean getCacheOption(){
+        return this.cacheOption;
+    }
+
+    public void finishService(){
+        cacheTitle.stopThreads();
+        cacheID.stopThreads();
     }
 
 }

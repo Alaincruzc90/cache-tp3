@@ -132,7 +132,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     }
 
     public void stopThreads(){
-        System.out.println("Stoping threads.");
+        //System.out.println("Stoping threads.");
         entryThread.interrupt();
         lifeThread.interrupt();
     }

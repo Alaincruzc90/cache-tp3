@@ -30,7 +30,9 @@ public class ThreadEntryLife implements Runnable {
                     }
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //If the exception is because of the interruption of the thread we don't worry because it is the service stopping the threads.
+                if(e.getClass().getCanonicalName() != "java.lang.InterruptedException")
+                    e.printStackTrace();
                 break;
             }
 
