@@ -57,4 +57,13 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
         LinkedList.addFirst(key);
     }
 
+    /*
+    * Method that clear all our data structures from their entries.
+    * */
+    @Override
+    public void clear(){
+        super.clear();
+        LinkedList.clear();
+    }
+
 }
