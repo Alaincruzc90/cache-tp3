@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Controller {
 
     public static void main(String[] args) {
-        Service service = new Service();
+        Service service = new Service(true);
 
         System.out.println("Welcome! Type 1 to search by a page name. Type 2 to search by page identifier. Type 3 to exit program.");
         Scanner scanner = new Scanner(System.in);
@@ -23,10 +23,12 @@ public class Controller {
                 //Receive wep page name
                 String webPageName = scanner.next();
                 //Pass the request to Service
+                service.getPage(webPageName);
             } else if (option == 2) {
                 //Receive web page identifier
                 int webPageIdentifier = scanner.nextInt();
                 //Pass request to Service
+                service.getPage(webPageIdentifier);
             } else if (option == 3) {
                 System.out.println("Goodbye!");
             } else {
