@@ -60,4 +60,13 @@ public class CacheRandom<K,V> extends CacheObject<K,V> {
         List.add(key);
     }
 
+    /*
+    * Method that clear all our data structures from their entries.
+    * */
+    @Override
+    public void clear(){
+        super.clear();
+        List.clear();
+    }
+
 }
