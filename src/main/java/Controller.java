@@ -13,7 +13,7 @@ public class Controller {
     public static void main(String[] args) {
         Service service = new Service(true);
 
-        System.out.println("Welcome! Type 1 to search by a page name. Type 2 to search by page identifier. Type 3 to exit program. Cache is active to toggle cache status(active or inactive) select option 4.");
+        System.out.println("Welcome! Type 1 to search by a page name. Type 2 to search by page identifier. Type 3 to exit program. Cache is active, to toggle cache status(active or inactive) select option 4.");
         Scanner scanner = new Scanner(System.in);
         int option = -1;
         do {
@@ -22,18 +22,21 @@ public class Controller {
 
             //Search page by title
             if (option == 1) {
+                System.out.println("Enter the title of the page:");
+                scanner.nextLine();//Flush nextline from nextInt.
                 //Receive wep page name
-                String webPageTitle = scanner.next();
+                String webPageTitle = scanner.nextLine();
                 //Pass the request to Service
                 System.out.println(service.getPage(webPageTitle));
             }
 
             //Search page by identifier
             else if (option == 2) {
+                System.out.println("Enter the ID of the page:");
                 //Receive web page identifier
                 int webPageIdentifier = scanner.nextInt();
                 //Pass request to Service
-                System.out.println(service.getPage(webPageIdentifier));
+                System.out.println("" + service.getPage(webPageIdentifier));
             }
 
             //Exit
@@ -57,6 +60,7 @@ public class Controller {
             }
 
         } while (option != 3);
+        service.finishService();
     }
 
 }

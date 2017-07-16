@@ -74,7 +74,6 @@ public class DataAccessObject {
                         result = "Id: "+id+" | ";
                         result += "Title: " + resultSet.getString("page_title");
                     }
-                    System.out.println(result);
                     resultSet.close();
                 } catch (SQLException sqlEx) {} //ignore
             }
@@ -120,7 +119,7 @@ public class DataAccessObject {
                         result = "Id: "+resultSet.getString("page_id")+" | ";
                         result += "Title: " + title;
                     }
-                    System.out.println(result);
+                    //System.out.println(result);
                     resultSet.close();
                 } catch (SQLException sqlEx) {} //ignore
             }
