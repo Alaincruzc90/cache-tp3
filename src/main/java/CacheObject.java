@@ -12,7 +12,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     private long entryMaxTime = 3600;
     // Given time for our cache to free all it's spaces
     // Important, set to 0 to make it infinite
-    private long cacheMaxTime = 1000;
+    private long cacheMaxTime = 0;
     // Name of our cache
     private String cacheName = "";
     // Priority queue that will measure when an entry's life has surpassed our max time
@@ -191,7 +191,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         lifeThread.interrupt();
     }
 
-    public Map getMap(){ return  entryMap; }
+    public PriorityQueue getPriorityQueue(){ return priorityQE; }
 
     // Destructor of our class.
     // We want to make sure our threads are stop when we destro our class.
