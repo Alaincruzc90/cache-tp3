@@ -37,7 +37,9 @@ public class CacheRandom<K,V> extends CacheObject<K,V> {
     public K getVictim(){
         Random RNG = new Random();
         int victimIndex = RNG.nextInt(List.size());
-        return List.remove(victimIndex);
+        K key = List.remove(victimIndex);
+        //System.out.println(key);
+        return key;
     }
 
     /*
@@ -47,6 +49,7 @@ public class CacheRandom<K,V> extends CacheObject<K,V> {
     @Override
     public void evict(K key){
         super.evict(key);
+        //System.out.println(key);
         List.remove(key);
     }
 

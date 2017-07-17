@@ -11,7 +11,7 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     private LinkedList<K> LinkedList;
 
     //Constructor by name of cache.
-    public CacheFIFO(String cacheName){
+    CacheFIFO(String cacheName){
         super(cacheName);
         LinkedList = new LinkedList<K>();
     }
@@ -34,7 +34,9 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     */
     @Override
     public K getVictim(){
-        return LinkedList.removeLast();
+        K key = LinkedList.removeLast();
+        //System.out.println(key);
+        return key;
     }
 
     /*
@@ -44,6 +46,7 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     @Override
     public void evict(K key){
         super.evict(key);
+        //System.out.println(key);
         LinkedList.remove(key);
     }
 

@@ -18,7 +18,14 @@ public class Controller {
         int option = -1;
         do {
             System.out.println("Select an option.");
-            option = scanner.nextInt();
+            try {
+                option = scanner.nextInt();
+            } catch (Exception e){
+                if(e.getClass().getCanonicalName() == "java.util.InputMismatchException") {//If input is invalid, tell the user and ask again.
+                    scanner.next();
+                    continue;
+                }
+            }
 
             //Search page by title
             if (option == 1) {
@@ -34,7 +41,19 @@ public class Controller {
             else if (option == 2) {
                 System.out.println("Enter the ID of the page:");
                 //Receive web page identifier
-                int webPageIdentifier = scanner.nextInt();
+                int webPageIdentifier = -1;
+                while(true){
+                    try {
+                        webPageIdentifier = scanner.nextInt();
+                    } catch (Exception e){
+                        if(e.getClass().getCanonicalName() == "java.util.InputMismatchException") {//If input is invalid, tell the user and ask again.
+                            System.out.println("Page ID should be an integer.");
+                            scanner.next();
+                            continue;
+                        }
+                    }
+                    break;
+                }
                 //Pass request to Service
                 System.out.println("" + service.getPage(webPageIdentifier));
             }
