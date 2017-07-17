@@ -27,7 +27,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * Constructor #1
     * Receive the name of our cache as a parameter
     * */
-    public CacheObject(String cacheName){
+    CacheObject(String cacheName){
         this.cacheName = cacheName;
         // For our priority queue we need to compare each entries' times in order to sort them.
         // Our comparator will help us sorting our entries.
@@ -44,7 +44,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * Receive the name of our cache as a parameter and the maximum number of entries that
     * the cache can hold.
     * */
-    public CacheObject(String cacheName, int maxEntries){
+    CacheObject(String cacheName, int maxEntries){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         // For our priority queue we need to compare each entries' times in order to sort them.
@@ -63,7 +63,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * the cache can hold, the maximum life of an entry and the maximum time a cache
     * can go on without clearing all the entries.
     * */
-    public CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
+    CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         this.entryMaxTime = entryMaxTime;

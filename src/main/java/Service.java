@@ -10,18 +10,18 @@ public class Service {
     private boolean cacheOption;
 
     //Cache object that stores elements by ID.
-    private CacheFIFO<Integer, String> cacheID;
+    private CacheLRU<Integer, String> cacheID;
 
     //Cache object that stores elements by Title.
-    private CacheFIFO<String, String> cacheTitle;
+    private CacheLRU<String, String> cacheTitle;
 
     //Data Access Object that allows use of database.
     private DataAccessObject dataAccess;
 
     Service(boolean cacheOption){
         this.cacheOption = cacheOption;
-        cacheID = new CacheFIFO<Integer, String>("ID Cache");
-        cacheTitle = new CacheFIFO<String, String>("Title Cache");
+        cacheID = new CacheLRU<Integer, String>("ID Cache");
+        cacheTitle = new CacheLRU<String, String>("Title Cache");
         dataAccess = new DataAccessObject();
     }
 
@@ -34,6 +34,7 @@ public class Service {
             //Checks if page is on cache
             String result = cacheID.get(id);
             if(result != null) {
+                //System.out.println("Using cache.");
                 //If it is retrieve from cache and return it.
                 return result;
             }
@@ -70,6 +71,7 @@ public class Service {
             //Checks if page is on cache
             String result = cacheTitle.get(title);
             if(result != null) {
+                //System.out.println("Using cache.");
                 //If it is retrieve from cache and return it.
                 return result;
             }

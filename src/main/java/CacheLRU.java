@@ -37,7 +37,9 @@ public class CacheLRU<K,V> extends CacheObject<K,V> {
     */
     @Override
     public K getVictim(){
-        return priorityLRU.poll().getKey();
+        K key = priorityLRU.poll().getKey();
+        System.out.println(key);
+        return key;
     }
 
     /*
@@ -49,6 +51,7 @@ public class CacheLRU<K,V> extends CacheObject<K,V> {
         try {
             Entry entry = (Entry) this.getMap().get(key);
             super.evict(key);
+            System.out.println(key);
             priorityLRU.remove(entry);
         } catch (ClassCastException e) {
             System.out.println("Coudn't cast to Entry.");

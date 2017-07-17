@@ -32,7 +32,9 @@ public class CacheLIFO<K,V> extends CacheObject<K,V> {
     */
     @Override
     public K getVictim(){
-        return stack.pop();
+        K key = stack.pop();
+        //System.out.println(key);
+        return key;
     }
 
     /*
@@ -42,6 +44,7 @@ public class CacheLIFO<K,V> extends CacheObject<K,V> {
     @Override
     public void evict(K key){
         super.evict(key);
+        //System.out.println(key);
         stack.remove(key);
     }
 
