@@ -12,7 +12,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     private long entryMaxTime = 3600;
     // Given time for our cache to free all it's spaces
     // Important, set to 0 to make it infinite
-    private long cacheMaxTime = 1000;
+    private long cacheMaxTime = 0;
     // Name of our cache
     private String cacheName = "";
     // Priority queue that will measure when an entry's life has surpassed our max time
@@ -24,10 +24,11 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     private Thread lifeThread;
 
     /*
-    * Constructor #1
-    * Receive the name of our cache as a parameter
+    * Constructor #1.
+    * @Params:
+    * cacheName: The name of our cache.
     * */
-    CacheObject(String cacheName){
+    public CacheObject(String cacheName){
         this.cacheName = cacheName;
         // For our priority queue we need to compare each entries' times in order to sort them.
         // Our comparator will help us sorting our entries.
@@ -40,11 +41,50 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     }
 
     /*
-    * Constructor #2
-    * Receive the name of our cache as a parameter and the maximum number of entries that
-    * the cache can hold.
+    * Constructor #2.
+    * @Params:
+    * cacheName: The name of our cache.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
     * */
-    CacheObject(String cacheName, int maxEntries){
+    public CacheObject(String cacheName, long cacheMaxTime){
+        this.cacheName = cacheName;
+        this.cacheMaxTime = cacheMaxTime;
+        // For our priority queue we need to compare each entries' times in order to sort them.
+        // Our comparator will help us sorting our entries.
+        Comparator<Entry> comparator = new EntryComparator();
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
+        entryMap = new HashMap<K, Entry<K, V>>();
+        // Initialization of the threads in charge of cleaning the cache.
+        initEntryLife(this);
+        initLifeTime(this);
+    }
+
+    /*
+    * Constructor #3.
+    * @Params:
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheName: The name of our cache.
+    * */
+    public CacheObject(long entryMaxTime, String cacheName){
+        this.cacheName = cacheName;
+        this.entryMaxTime = entryMaxTime;
+        // For our priority queue we need to compare each entries' times in order to sort them.
+        // Our comparator will help us sorting our entries.
+        Comparator<Entry> comparator = new EntryComparator();
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
+        entryMap = new HashMap<K, Entry<K, V>>();
+        // Initialization of the threads in charge of cleaning the cache.
+        initEntryLife(this);
+        initLifeTime(this);
+    }
+
+    /*
+    * Constructor #4.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * */
+    public CacheObject(String cacheName, int maxEntries){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         // For our priority queue we need to compare each entries' times in order to sort them.
@@ -58,12 +98,78 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     }
 
     /*
-    * Constructor #3
-    * Receive the name of our cache as a parameter, the maximum number of entries that
-    * the cache can hold, the maximum life of an entry and the maximum time a cache
-    * can go on without clearing all the entries.
+    * Constructor #5.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
     * */
-    CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
+    public CacheObject(String cacheName, int maxEntries, long entryMaxTime){
+        this.cacheName = cacheName;
+        this.maxEntries = maxEntries;
+        this.entryMaxTime = entryMaxTime;
+        // For our priority queue we need to compare each entries' times in order to sort them.
+        // Our comparator will help us sorting our entries.
+        Comparator<Entry> comparator = new EntryComparator();
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
+        entryMap = new HashMap<K, Entry<K, V>>();
+        // Initialization of the threads in charge of cleaning the cache.
+        initEntryLife(this);
+        initLifeTime(this);
+    }
+
+    /*
+    * Constructor #6.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheObject(String cacheName, long cacheMaxTime, int maxEntries){
+        this.cacheName = cacheName;
+        this.maxEntries = maxEntries;
+        this.cacheMaxTime = cacheMaxTime;
+        // For our priority queue we need to compare each entries' times in order to sort them.
+        // Our comparator will help us sorting our entries.
+        Comparator<Entry> comparator = new EntryComparator();
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
+        entryMap = new HashMap<K, Entry<K, V>>();
+        // Initialization of the threads in charge of cleaning the cache.
+        initEntryLife(this);
+        initLifeTime(this);
+    }
+
+    /*
+    * Constructor #7.
+    * @Params:
+    * cacheName: The name of our cache.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheObject(String cacheName, long cacheMaxTime, long entryMaxTime){
+        this.cacheName = cacheName;
+        this.entryMaxTime = entryMaxTime;
+        this.cacheMaxTime = cacheMaxTime;
+        // For our priority queue we need to compare each entries' times in order to sort them.
+        // Our comparator will help us sorting our entries.
+        Comparator<Entry> comparator = new EntryComparator();
+        priorityQE = new PriorityQueue<Entry>(30, (Comparator<? super Entry>) comparator);
+        entryMap = new HashMap<K, Entry<K, V>>();
+        // Initialization of the threads in charge of cleaning the cache.
+        initEntryLife(this);
+        initLifeTime(this);
+    }
+
+
+    /*
+    * Constructor #8.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         this.entryMaxTime = entryMaxTime;
@@ -191,7 +297,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
         lifeThread.interrupt();
     }
 
-    public Map getMap(){ return  entryMap; }
+    public PriorityQueue getPriorityQueue(){ return priorityQE; }
 
     // Destructor of our class.
     // We want to make sure our threads are stop when we destro our class.
