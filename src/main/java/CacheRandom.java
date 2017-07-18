@@ -11,21 +11,96 @@ public class CacheRandom<K,V> extends CacheObject<K,V> {
     //List that contains every element in the cache.
     private ArrayList<K> List;
 
-    //Constructor by name of cache.
+    /*
+    * Constructor #1.
+    * @Params:
+    * cacheName: The name of our cache.
+    * */
     public CacheRandom(String cacheName){
         super(cacheName);
         List = new ArrayList<K>();
     }
 
-    //Constructor by name of cache and maximum of entries allowed.
+    /*
+    * Constructor #2.
+    * @Params:
+    * cacheName: The name of our cache.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheRandom(String cacheName, long cacheMaxTime){
+        super(cacheName,cacheMaxTime);
+        List = new ArrayList<K>();
+    }
+
+    /*
+    * Constructor #3.
+    * @Params:
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * cacheName: The name of our cache.
+    * */
+    public CacheRandom(long entryMaxTime, String cacheName){
+        super(entryMaxTime,cacheName);
+        List = new ArrayList<K>();
+    }
+
+    /*
+    * Constructor #4.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * */
     public CacheRandom(String cacheName, int maxEntries){
         super(cacheName,maxEntries);
         List = new ArrayList<K>();
     }
 
-    //Constructor of cahe by cache name, maximum of entries and maximum time allowed in cache.
+    /*
+    * Constructor #5.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheRandom(String cacheName, int maxEntries, long entryMaxTime){
+        super(cacheName,maxEntries,entryMaxTime);
+        List = new ArrayList<K>();
+    }
+
+    /*
+    * Constructor #6.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheRandom(String cacheName, long cacheMaxTime, int maxEntries){
+        super(cacheName,cacheMaxTime,maxEntries);
+        List = new ArrayList<K>();
+    }
+
+    /*
+    * Constructor #7.
+    * @Params:
+    * cacheName: The name of our cache.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheRandom(String cacheName, long cacheMaxTime, long entryMaxTime){
+        super(cacheName,cacheMaxTime,entryMaxTime);
+        List = new ArrayList<K>();
+    }
+
+
+    /*
+    * Constructor #8.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
     public CacheRandom(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
-        super(cacheName, maxEntries, entryMaxTime, cacheMaxTime);
+        super(cacheName,maxEntries,entryMaxTime,cacheMaxTime);
         List = new ArrayList<K>();
     }
 
