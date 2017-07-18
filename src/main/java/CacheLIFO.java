@@ -8,21 +8,96 @@ public class CacheLIFO<K,V> extends CacheObject<K,V> {
     // Stack are perfect for the LIFO algorithm, because it allows to pop the last element that was inserted.
     private Stack<K> stack;
 
-    //Constructor by name of cache.
+    /*
+    * Constructor #1.
+    * @Params:
+    * cacheName: The name of our cache.
+    * */
     public CacheLIFO(String cacheName){
         super(cacheName);
         stack = new Stack<K>();
     }
 
-    //Constructor by name of cache and maximum of entries allowed.
+    /*
+    * Constructor #2.
+    * @Params:
+    * cacheName: The name of our cache.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheLIFO(String cacheName, long cacheMaxTime){
+        super(cacheName,cacheMaxTime);
+        stack = new Stack<K>();
+    }
+
+    /*
+    * Constructor #3.
+    * @Params:
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * cacheName: The name of our cache.
+    * */
+    public CacheLIFO(long entryMaxTime, String cacheName){
+        super(entryMaxTime,cacheName);
+        stack = new Stack<K>();
+    }
+
+    /*
+    * Constructor #4.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * */
     public CacheLIFO(String cacheName, int maxEntries){
         super(cacheName,maxEntries);
         stack = new Stack<K>();
     }
 
-    //Constructor of cahe by cache name, maximum of entries and maximum time allowed in cache.
+    /*
+    * Constructor #5.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheLIFO(String cacheName, int maxEntries, long entryMaxTime){
+        super(cacheName,maxEntries,entryMaxTime);
+        stack = new Stack<K>();
+    }
+
+    /*
+    * Constructor #6.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheLIFO(String cacheName, long cacheMaxTime, int maxEntries){
+        super(cacheName,cacheMaxTime,maxEntries);
+        stack = new Stack<K>();
+    }
+
+    /*
+    * Constructor #7.
+    * @Params:
+    * cacheName: The name of our cache.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheLIFO(String cacheName, long cacheMaxTime, long entryMaxTime){
+        super(cacheName,cacheMaxTime,entryMaxTime);
+        stack = new Stack<K>();
+    }
+
+
+    /*
+    * Constructor #8.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
     public CacheLIFO(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
-        super(cacheName, maxEntries, entryMaxTime, cacheMaxTime);
+        super(cacheName,maxEntries,entryMaxTime,cacheMaxTime);
         stack = new Stack<K>();
     }
 
