@@ -8,24 +8,99 @@ import java.util.LinkedList;
 public class CacheFIFO<K,V> extends CacheObject<K,V> {
 
     //List that contains every element in the cache.
-    private LinkedList<K> LinkedList;
+    private LinkedList<K> linkedList;
 
-    //Constructor by name of cache.
-    CacheFIFO(String cacheName){
+    /*
+    * Constructor #1.
+    * @Params:
+    * cacheName: The name of our cache.
+    * */
+    public CacheFIFO(String cacheName){
         super(cacheName);
-        LinkedList = new LinkedList<K>();
+        linkedList = new LinkedList<K>();
     }
 
-    //Constructor by name of cache and maximum of entries allowed.
+    /*
+    * Constructor #2.
+    * @Params:
+    * cacheName: The name of our cache.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheFIFO(String cacheName, long cacheMaxTime){
+        super(cacheName,cacheMaxTime);
+        linkedList = new LinkedList<K>();
+    }
+
+    /*
+    * Constructor #3.
+    * @Params:
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * cacheName: The name of our cache.
+    * */
+    public CacheFIFO(long entryMaxTime, String cacheName){
+        super(entryMaxTime,cacheName);
+        linkedList = new LinkedList<K>();
+    }
+
+    /*
+    * Constructor #4.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * */
     public CacheFIFO(String cacheName, int maxEntries){
         super(cacheName,maxEntries);
-        LinkedList = new LinkedList<K>();
+        linkedList = new LinkedList<K>();
     }
 
-    //Constructor of cache by cache name, maximum of entries and maximum time allowed in cache.
+    /*
+    * Constructor #5.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheFIFO(String cacheName, int maxEntries, long entryMaxTime){
+        super(cacheName,maxEntries,entryMaxTime);
+        linkedList = new LinkedList<K>();
+    }
+
+    /*
+    * Constructor #6.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * */
+    public CacheFIFO(String cacheName, long cacheMaxTime, int maxEntries){
+        super(cacheName,cacheMaxTime,maxEntries);
+        linkedList = new LinkedList<K>();
+    }
+
+    /*
+    * Constructor #7.
+    * @Params:
+    * cacheName: The name of our cache.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
+    public CacheFIFO(String cacheName, long cacheMaxTime, long entryMaxTime){
+        super(cacheName,cacheMaxTime,entryMaxTime);
+        linkedList = new LinkedList<K>();
+    }
+
+
+    /*
+    * Constructor #8.
+    * @Params:
+    * cacheName: The name of our cache.
+    * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
+    * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
+    * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
+    * */
     public CacheFIFO(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
-        super(cacheName, maxEntries, entryMaxTime, cacheMaxTime);
-        LinkedList = new LinkedList<K>();
+        super(cacheName,maxEntries,entryMaxTime,cacheMaxTime);
+        linkedList = new LinkedList<K>();
     }
 
     /*
@@ -34,7 +109,7 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     */
     @Override
     public K getVictim(){
-        K key = LinkedList.removeLast();
+        K key = linkedList.removeLast();
         //System.out.println(key);
         return key;
     }
@@ -47,7 +122,7 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     public void evict(K key){
         super.evict(key);
         //System.out.println(key);
-        LinkedList.remove(key);
+        linkedList.remove(key);
     }
 
     /*
@@ -57,7 +132,7 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     @Override
     public void put(K key, V value){
         super.put(key,value);
-        LinkedList.addFirst(key);
+        linkedList.addFirst(key);
     }
 
     /*
@@ -66,7 +141,7 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
     @Override
     public void clear(){
         super.clear();
-        LinkedList.clear();
+        linkedList.clear();
     }
 
 }
