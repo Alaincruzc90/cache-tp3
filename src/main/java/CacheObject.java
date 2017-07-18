@@ -28,7 +28,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * @Params:
     * cacheName: The name of our cache.
     * */
-    public CacheObject(String cacheName){
+    CacheObject(String cacheName){
         this.cacheName = cacheName;
         // For our priority queue we need to compare each entries' times in order to sort them.
         // Our comparator will help us sorting our entries.
@@ -46,7 +46,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * cacheName: The name of our cache.
     * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
     * */
-    public CacheObject(String cacheName, long cacheMaxTime){
+    CacheObject(String cacheName, long cacheMaxTime){
         this.cacheName = cacheName;
         this.cacheMaxTime = cacheMaxTime;
         // For our priority queue we need to compare each entries' times in order to sort them.
@@ -65,7 +65,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
     * cacheName: The name of our cache.
     * */
-    public CacheObject(long entryMaxTime, String cacheName){
+    CacheObject(long entryMaxTime, String cacheName){
         this.cacheName = cacheName;
         this.entryMaxTime = entryMaxTime;
         // For our priority queue we need to compare each entries' times in order to sort them.
@@ -84,7 +84,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * cacheName: The name of our cache.
     * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
     * */
-    public CacheObject(String cacheName, int maxEntries){
+    CacheObject(String cacheName, int maxEntries){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         // For our priority queue we need to compare each entries' times in order to sort them.
@@ -104,7 +104,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
     * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
     * */
-    public CacheObject(String cacheName, int maxEntries, long entryMaxTime){
+    CacheObject(String cacheName, int maxEntries, long entryMaxTime){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         this.entryMaxTime = entryMaxTime;
@@ -125,7 +125,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * maxEntries: Maximum amount of entries that our cache can hold simultaneously.
     * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
     * */
-    public CacheObject(String cacheName, long cacheMaxTime, int maxEntries){
+    CacheObject(String cacheName, long cacheMaxTime, int maxEntries){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         this.cacheMaxTime = cacheMaxTime;
@@ -146,7 +146,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
     * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
     * */
-    public CacheObject(String cacheName, long cacheMaxTime, long entryMaxTime){
+    CacheObject(String cacheName, long cacheMaxTime, long entryMaxTime){
         this.cacheName = cacheName;
         this.entryMaxTime = entryMaxTime;
         this.cacheMaxTime = cacheMaxTime;
@@ -169,7 +169,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * entryMaxTime: Maximum amount of time an entry can stay in the cache without being read.
     * cacheMaxTime: Maximum amount of time our cache can stay without clearing it's entries.
     * */
-    public CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
+    CacheObject(String cacheName, int maxEntries, long entryMaxTime, long cacheMaxTime){
         this.cacheName = cacheName;
         this.maxEntries = maxEntries;
         this.entryMaxTime = entryMaxTime;
@@ -225,7 +225,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
             evict(keyVictim);
         }
         // Add the new entry.
-        Entry<K,V> entry = new Entry<K,V>(key,getTime(),value);
+        Entry<K,V> entry = new Entry<>(key,getTime(),value);
         entryMap.put(key,entry);
         priorityQE.add(entry);
     }
@@ -253,8 +253,7 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     * */
     public long getTime(){
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        long secondsSinceEpoch = calendar.getTimeInMillis() / 1000L;
-        return secondsSinceEpoch;
+        return calendar.getTimeInMillis() / 1000L;
     }
 
     /*
@@ -293,8 +292,10 @@ public abstract class CacheObject<K,V> implements Cache<K,V> {
     // Method that interrupts our threads, so that they can finish their corresponding sleeps.
     public void stopThreads(){
         //System.out.println("Stoping threads.");
-        entryThread.interrupt();
-        lifeThread.interrupt();
+        if(entryMaxTime > 0)
+            entryThread.interrupt();
+        if(cacheMaxTime > 0)
+            lifeThread.interrupt();
     }
 
     public PriorityQueue getPriorityQueue(){ return priorityQE; }

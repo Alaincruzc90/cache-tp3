@@ -18,10 +18,58 @@ public class Service {
     //Data Access Object that allows use of database.
     private DataAccessObject dataAccess;
 
-    Service(boolean cacheOption){
+    Service(boolean cacheOption, int cacheSize, long cacheEntryTime, long cacheMaxTime){
         this.cacheOption = cacheOption;
-        cacheID = new CacheLRU<Integer, String>("ID Cache");
-        cacheTitle = new CacheLRU<String, String>("Title Cache");
+
+        //Is considered the default value for the cache parameters.
+        final int defaultValue = -1;
+
+        //Cache initialization based on different combinations of parameters.
+        if(cacheSize == defaultValue) {
+            if(cacheEntryTime == defaultValue){
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheLRU<>("ID Cache");
+                    cacheTitle = new CacheLRU<>("Title Cache");
+                }
+                else{
+                    cacheID = new CacheLRU<>("ID Cache", cacheMaxTime);
+                    cacheTitle = new CacheLRU<>("Title Cache", cacheMaxTime);
+                }
+            }
+            else{
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheLRU<>(cacheEntryTime, "ID Cache");
+                    cacheTitle = new CacheLRU<>(cacheEntryTime, "Title Cache");
+                }
+                else{
+                    cacheID = new CacheLRU<>("ID Cache", cacheMaxTime, cacheEntryTime);
+                    cacheTitle = new CacheLRU<>("Title Cache", cacheMaxTime, cacheEntryTime);
+                }
+            }
+        }
+        else {
+            if(cacheEntryTime == defaultValue){
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheLRU<>("ID Cache", cacheSize);
+                    cacheTitle = new CacheLRU<>("Title Cache", cacheSize);
+                }
+                else{
+                    cacheID = new CacheLRU<>("ID Cache", cacheMaxTime, cacheSize);
+                    cacheTitle = new CacheLRU<>("Title Cache", cacheMaxTime, cacheSize);
+                }
+            }
+            else{
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheLRU<>("ID Cache", cacheSize, cacheEntryTime);
+                    cacheTitle = new CacheLRU<>("Title Cache", cacheSize, cacheEntryTime);
+                }
+                else{
+                    cacheID = new CacheLRU<>("ID Cache", cacheSize, cacheEntryTime, cacheMaxTime);
+                    cacheTitle = new CacheLRU<>("Title Cache", cacheSize, cacheEntryTime, cacheMaxTime);
+                }
+            }
+        }
+
         dataAccess = new DataAccessObject();
     }
 

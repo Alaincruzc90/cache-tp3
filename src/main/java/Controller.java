@@ -38,7 +38,6 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Service service = new Service(true);
 
         System.out.println("Welcome! Choose the cache values.");
         Scanner scanner = new Scanner(System.in);
@@ -52,43 +51,7 @@ public class Controller {
         //Receive parameter for cache max time.
         int cacheMaxTime = receiveIntegerFromUser("Enter the maximum time that passes until a cache is erased if it has not been accessed or press enter for the default value.", "Cache time has to be an integer.");
 
-        //Service initialization based different combinations of parameters.
-        if(cacheSize == defaultValue) {
-            if(cacheEntryTime == defaultValue){
-                if(cacheMaxTime == defaultValue){
-
-                }
-                else{
-
-                }
-            }
-            else{
-                if(cacheMaxTime == defaultValue){
-
-                }
-                else{
-
-                }
-            }
-        }
-        else {
-            if(cacheEntryTime == defaultValue){
-                if(cacheMaxTime == defaultValue){
-
-                }
-                else{
-
-                }
-            }
-            else{
-                if(cacheMaxTime == defaultValue){
-
-                }
-                else{
-
-                }
-            }
-        }
+        Service service = new Service(true, cacheSize, cacheEntryTime, cacheMaxTime);
 
         System.out.println("Type 1 to search by a page name. Type 2 to search by page identifier. Cache is active, to toggle cache status(active or inactive) select option 3. Press enter to exit program.");
         int option;
