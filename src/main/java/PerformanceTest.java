@@ -18,7 +18,7 @@ public class PerformanceTest {
 
         System.out.println("Test 1.1 started.");
 
-        //Test where numberOfTotalPageAccess == 40. numberOfPages == numberOfTotalPageAccess/4. CacheSizes are default, numberOfPages/4, numberOfPages/2, numberOfPages and inactive.
+        //Test where numberOfTotalPageAccess == 50. numberOfPages == numberOfTotalPageAccess/4. CacheSizes are default, numberOfPages/4, numberOfPages/2, numberOfPages and inactive.
         test(true, 50, 12, -1);
         test(true, 50, 12, 3);
         test(true, 50, 12, 6);
@@ -29,7 +29,7 @@ public class PerformanceTest {
 
         System.out.println("Test 1.2 started.");
 
-        //Test where numberOfTotalPageAccess == 40. numberOfPages == numberOfTotalPageAccess/2. CacheSizes are default, numberOfPages/4, numberOfPages/2, numberOfPages and inactive.
+        //Test where numberOfTotalPageAccess == 50. numberOfPages == numberOfTotalPageAccess/2. CacheSizes are default, numberOfPages/4, numberOfPages/2, numberOfPages and inactive.
         test(true, 50, 25, -1);
         test(true, 50, 25, 6);
         test(true, 50, 25, 12);
@@ -40,7 +40,7 @@ public class PerformanceTest {
 
         System.out.println("Test 1.3 started.");
 
-        //Test where numberOfTotalPageAccess == 40. numberOfPages == numberOfTotalPageAccess. CacheSizes are default, numberOfPages/4, numberOfPages/2, numberOfPages and inactive.
+        //Test where numberOfTotalPageAccess == 50. numberOfPages == numberOfTotalPageAccess. CacheSizes are default, numberOfPages/4, numberOfPages/2, numberOfPages and inactive.
         test(true, 50, 50, -1);
         test(true, 50, 50, 12);
         test(true, 50, 50, 25);
