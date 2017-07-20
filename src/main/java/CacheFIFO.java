@@ -89,7 +89,6 @@ public class CacheFIFO<K,V> extends CacheObject<K,V> {
         linkedList = new LinkedList<K>();
     }
 
-
     /*
     * Constructor #8.
     * @Params:
