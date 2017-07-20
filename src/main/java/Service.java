@@ -10,18 +10,66 @@ public class Service {
     private boolean cacheOption;
 
     //Cache object that stores elements by ID.
-    private CacheLRU<Integer, String> cacheID;
+    private CacheFIFO<Integer, String> cacheID;
 
     //Cache object that stores elements by Title.
-    private CacheLRU<String, String> cacheTitle;
+    private CacheFIFO<String, String> cacheTitle;
 
     //Data Access Object that allows use of database.
     private DataAccessObject dataAccess;
 
-    Service(boolean cacheOption){
+    Service(boolean cacheOption, int cacheSize, long cacheEntryTime, long cacheMaxTime){
         this.cacheOption = cacheOption;
-        cacheID = new CacheLRU<Integer, String>("ID Cache");
-        cacheTitle = new CacheLRU<String, String>("Title Cache");
+
+        //Is considered the default value for the cache parameters.
+        final int defaultValue = -1;
+
+        //Cache initialization based on different combinations of parameters.
+        if(cacheSize == defaultValue) {
+            if(cacheEntryTime == defaultValue){
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheFIFO<>("ID Cache");
+                    cacheTitle = new CacheFIFO<>("Title Cache");
+                }
+                else{
+                    cacheID = new CacheFIFO<>("ID Cache", cacheMaxTime);
+                    cacheTitle = new CacheFIFO<>("Title Cache", cacheMaxTime);
+                }
+            }
+            else{
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheFIFO<>(cacheEntryTime, "ID Cache");
+                    cacheTitle = new CacheFIFO<>(cacheEntryTime, "Title Cache");
+                }
+                else{
+                    cacheID = new CacheFIFO<>("ID Cache", cacheMaxTime, cacheEntryTime);
+                    cacheTitle = new CacheFIFO<>("Title Cache", cacheMaxTime, cacheEntryTime);
+                }
+            }
+        }
+        else {
+            if(cacheEntryTime == defaultValue){
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheFIFO<>("ID Cache", cacheSize);
+                    cacheTitle = new CacheFIFO<>("Title Cache", cacheSize);
+                }
+                else{
+                    cacheID = new CacheFIFO<>("ID Cache", cacheMaxTime, cacheSize);
+                    cacheTitle = new CacheFIFO<>("Title Cache", cacheMaxTime, cacheSize);
+                }
+            }
+            else{
+                if(cacheMaxTime == defaultValue){
+                    cacheID = new CacheFIFO<>("ID Cache", cacheSize, cacheEntryTime);
+                    cacheTitle = new CacheFIFO<>("Title Cache", cacheSize, cacheEntryTime);
+                }
+                else{
+                    cacheID = new CacheFIFO<>("ID Cache", cacheSize, cacheEntryTime, cacheMaxTime);
+                    cacheTitle = new CacheFIFO<>("Title Cache", cacheSize, cacheEntryTime, cacheMaxTime);
+                }
+            }
+        }
+
         dataAccess = new DataAccessObject();
     }
 
